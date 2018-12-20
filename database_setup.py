@@ -59,7 +59,7 @@ class MenuItem(Base):
         }
 
 
-engine = create_engine('postgresql://catalog:catalog@localhost/catalog', connect_args={'check_same_thread': False})        # noqa
+engine = create_engine('postgresql://catalog:catalog@localhost/catalog')        # noqa
 
 Base.metadata.bind = engine
 
