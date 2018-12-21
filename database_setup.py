@@ -1,8 +1,6 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy.orm import scoped_session
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
 Base = declarative_base()
@@ -15,6 +13,15 @@ class User(Base):
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
     picture = Column(String(250))
+    
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'email': self.email,
+            'picture': self.picture,
+        }
 
 
 class Restaurant(Base):
@@ -60,8 +67,4 @@ class MenuItem(Base):
 
 
 engine = create_engine('postgresql://catalog:catalog@localhost/catalog')        # noqa
-
-Base.metadata.bind = engine
-
-DBSession = sessionmaker(bind=engine)
-session = scoped_session(DBSession)
+Base.metadata.create_all(engine)
