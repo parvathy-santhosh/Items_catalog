@@ -1,7 +1,5 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import scoped_session
-
 from database_setup import Restaurant, Base, MenuItem, User
 
 engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
@@ -17,7 +15,7 @@ DBSession = sessionmaker(bind=engine)
 # session.commit(). If you're not happy about the changes, you can
 # revert all of them back to the last commit by calling
 # session.rollback()
-session = scoped_session(DBSession)
+session = DBSession()
 
 
 # Create dummy user
